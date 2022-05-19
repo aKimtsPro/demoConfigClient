@@ -24,18 +24,18 @@ spring:
         input-in-0:
           destination: queue.processed.log.messages
           binder: rabbit
-          group: ok
+          group: processed
         # producing unprocessed messages
         output-out-0:
           destination: queue.log.messages
           binder: rabbit
-          group: ok
+          group: unprocessed
         # get unprocessed and send processed
         processor-in-0:
           destination: queue.log.messages
           binder: rabbit
-          group: ok
+          group: unprocessed
         processor-out-0:
           destination: queue.processed.log.messages
           binder: rabbit
-          group: ok
+          group: processed
