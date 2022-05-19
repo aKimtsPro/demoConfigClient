@@ -5,3 +5,37 @@ spring:
     active: prod
   config:
     import: configserver:http://root:s3cr3t@localhost:8888
+
+  cloud:
+    stream:
+      binders:
+        rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: guest
+                password: guest
+                virtual-host: /
+      bindings:
+        # listening processed messages
+        input-in-0:
+          destination: queue.processed.log.messages
+          binder: rabbit
+          group: ok
+        # producing unprocessed messages
+        output-out-0:
+          destination: queue.log.messages
+          binder: rabbit
+          group: ok
+        # get unprocessed and send processed
+        processor-in-0:
+          destination: queue.log.messages
+          binder: rabbit
+          group: ok
+        processor-out-0:
+          destination: queue.processed.log.messages
+          binder: rabbit
+          group: ok
