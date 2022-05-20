@@ -10,6 +10,12 @@ spring:
     stream:
       function:
         definition: input;processor;output
+        # input-in-0
+        # input-out-0
+        # processor-in-0
+        # processor-out-0
+        # output-in-0
+        # output-out-0
       binders:
         # nom du binder, arbitraire
         rabbit:
@@ -25,7 +31,7 @@ spring:
       bindings:
         # listening processed messages
         input-in-0:
-          # Exchange
+          # TopicExchange nom
           destination: queue.processed.log.messages
           binder: rabbit
           # Queue
