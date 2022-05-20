@@ -1,14 +1,17 @@
 spring:
-#  application:
-#    name: config-client
-#  profiles:
-#    active: prod
-#  config:
-#    import: configserver:http://root:s3cr3t@localhost:8888
+  application:
+    name: config-client
+  profiles:
+    active: prod
+  config:
+    import: configserver:http://root:s3cr3t@localhost:8888
 
   cloud:
     stream:
+      function:
+        definition: input;processor;output
       binders:
+        # nom du binder, arbitraire
         rabbit:
           type: rabbit
           environment:
@@ -22,8 +25,10 @@ spring:
       bindings:
         # listening processed messages
         input-in-0:
+          # Exchange
           destination: queue.processed.log.messages
           binder: rabbit
+          # Queue
           group: processed
         # producing unprocessed messages
         output-out-0:
